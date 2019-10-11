@@ -19,11 +19,13 @@ initial :: World
 initial = Go Circle 0
 
 input :: Event -> World -> World
-input (EventKey (Char 'p') _ _ _) (Go _ n)  = Pause n -- Pause logic
-input (EventKey (Char 's') _ _ _) (Go _ n)  = Go Square n
-input (EventKey (Char 'c') _ _ _) (Go _ n)  = Go Circle n
-input (EventKey (Char 'r') _ _ _) (Pause n) = Go Circle n
-input _ w                                   = w -- Otherwise, keep the same
+input (EventKey (Char 'p') _ _ _) (Go _ n)                 = Pause n -- Pause logic
+input (EventKey (MouseButton LeftButton) Up _ _) (Go _ n)  = Pause n -- Pause logic with mouse click
+input (EventKey (MouseButton LeftButton) Up _ _) (Pause n) = Go Circle n -- Resume logic with mouse click
+input (EventKey (Char 's') _ _ _) (Go _ n)                 = Go Square n
+input (EventKey (Char 'c') _ _ _) (Go _ n)                 = Go Circle n
+input (EventKey (Char 'r') _ _ _) (Pause n)                = Go Circle n
+input _ w                                                  = w -- Otherwise, keep the same
 
 step :: Float -> World -> World
 step _ (Go s n)  = Go s ((n + 1) `mod` 255)

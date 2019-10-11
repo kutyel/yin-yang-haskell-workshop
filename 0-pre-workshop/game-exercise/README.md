@@ -128,13 +128,13 @@ view (Pause _) = translate (-120) 0
 
 ## It is now your turn!
 
-[x] - Make the shape change to an square when the user presses 's' and back to a circle with 'c'. _Hint_: change the state type to read as follows.
+- [x] Make the shape change to an square when the user presses 's' and back to a circle with 'c'. _Hint_: change the state type to read as follows.
 
 ```haskell
 data World = Go Shape Int | Pause Int
 data Shape = Circle | Square
 ```
 
-[ ] - Make the pause/resume behavior also work with a mouse click. _Hint_: check the [`Key`](https://www.stackage.org/haddock/lts-14.5/gloss-1.13.0.1/Graphics-Gloss-Interface-IO-Game.html#t:Key) type, there is a `MouseButton` constructor there.
+- [x] Make the pause/resume behavior also work with a mouse click. _Hint_: check the [`Key`](https://www.stackage.org/haddock/lts-14.5/gloss-1.13.0.1/Graphics-Gloss-Interface-IO-Game.html#t:Key) type, there is a `MouseButton` constructor there.
 
-[ ] - Adapt the code to generate a new shape every X seconds (feel free to choose X). That is, during the first X seconds only one shape should appear on the screen, then two, then three, and so on. _Hint_: the [following functions](https://www.stackage.org/haddock/lts-14.5/base-4.12.0.0/Prelude.html#g:17) may be handy.
+- [ ] Adapt the code to generate a new shape every X seconds (feel free to choose X). That is, during the first X seconds only one shape should appear on the screen, then two, then three, and so on. _Hint_: the [following functions](https://www.stackage.org/haddock/lts-14.5/base-4.12.0.0/Prelude.html#g:17) may be handy.
