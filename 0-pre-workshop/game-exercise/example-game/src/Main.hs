@@ -38,11 +38,13 @@ step :: Float -> World -> World
 step _ (Go s n)  = Go s ((n + 1) `mod` 255)
 step _ (Pause n) = Pause n
 
-makeC :: Int -> Color
-makeC x = makeColorI x 150 150 255
-
 view :: World -> Picture
-view (Go Square n) = color (makeC n) (rectangleSolid 100 100)
-view (Go Circle n) = color (makeC n) (thickCircle 50 50)
-view (Pause _) =
-  translate (-120) 0 $ scale 0.2 0.2 $ color white $ text "Press r to resume"
+view w =
+  case w of
+    (Go Square n) -> color (c n) (rectangleSolid 100 100)
+    (Go Circle n) -> color (c n) (thickCircle 50 50)
+    (Pause _) ->
+      translate (-120) 0 $
+      scale 0.2 0.2 $ color white $ text "Press r to resume"
+  where
+    c x = makeColorI x 150 150 255
