@@ -137,4 +137,4 @@ data Shape = Circle | Square
 
 - [x] Make the pause/resume behavior also work with a mouse click. _Hint_: check the [`Key`](https://www.stackage.org/haddock/lts-14.5/gloss-1.13.0.1/Graphics-Gloss-Interface-IO-Game.html#t:Key) type, there is a `MouseButton` constructor there.
 
-- [ ] Adapt the code to generate a new shape every X seconds (feel free to choose X). That is, during the first X seconds only one shape should appear on the screen, then two, then three, and so on. _Hint_: the [following functions](https://www.stackage.org/haddock/lts-14.5/base-4.12.0.0/Prelude.html#g:17) may be handy.
+- [x] Adapt the code to generate a new shape every X seconds (feel free to choose X). That is, during the first X seconds only one shape should appear on the screen, then two, then three, and so on. _Hint_: the [following functions](https://www.stackage.org/haddock/lts-14.5/base-4.12.0.0/Prelude.html#g:17) may be handy.

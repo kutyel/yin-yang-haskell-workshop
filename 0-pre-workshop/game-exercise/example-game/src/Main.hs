@@ -15,7 +15,7 @@ main =
     step
 
 data World
-  = Go Shape Int
+  = Go [Shape] Int
   | Pause Int
 
 data Shape
@@ -23,28 +23,32 @@ data Shape
   | Square
 
 initial :: World
-initial = Go Circle 0
+initial = Go [Circle] 0
 
 input :: Event -> World -> World
 input (EventKey (Char 'p') _ _ _) (Go _ n)                 = Pause n -- Pause logic
 input (EventKey (MouseButton LeftButton) Up _ _) (Go _ n)  = Pause n -- Pause logic with mouse click
-input (EventKey (MouseButton LeftButton) Up _ _) (Pause n) = Go Circle n -- Resume logic with mouse click
-input (EventKey (Char 's') _ _ _) (Go _ n)                 = Go Square n
-input (EventKey (Char 'c') _ _ _) (Go _ n)                 = Go Circle n
-input (EventKey (Char 'r') _ _ _) (Pause n)                = Go Circle n
+input (EventKey (MouseButton LeftButton) Up _ _) (Pause n) = Go [Circle] n -- Resume logic with mouse click
+input (EventKey (Char 's') _ _ _) (Go _ n)                 = Go [Square] n
+input (EventKey (Char 'c') _ _ _) (Go _ n)                 = Go [Circle] n
+input (EventKey (Char 'r') _ _ _) (Pause n)                = Go [Circle] n
 input _ w                                                  = w -- Otherwise, keep the same
 
+num :: (Integral a, Num b) => a -> b
+num x = fromIntegral $ (x + 1) `mod` 255
+
 step :: Float -> World -> World
-step _ (Go s n)  = Go s ((n + 1) `mod` 255)
+step _ (Go _ n)  = Go (replicate (num n) Circle) ((n + 1) `mod` 255)
 step _ (Pause n) = Pause n
 
 view :: World -> Picture
 view w =
   case w of
-    (Go Square n) -> color (c n) (rectangleSolid 100 100)
-    (Go Circle n) -> color (c n) (thickCircle 50 50)
+    (Go xs n) -> pictures $ map (r n) xs
     (Pause _) ->
       translate (-120) 0 $
       scale 0.2 0.2 $ color white $ text "Press r to resume"
   where
-    c x = makeColorI x 150 150 255
+    c x = makeColorI 150 x x 255
+    r x Square = color (c x) (rectangleSolid (num x) (num x))
+    r x Circle = color (c x) (thickCircle (num x) (num x))
