@@ -38,17 +38,16 @@ num :: (Integral a, Num b) => a -> b
 num x = fromIntegral $ (x + 1) `mod` 255
 
 step :: Float -> World -> World
-step _ (Go _ n)  = Go (replicate (num n) Circle) ((n + 1) `mod` 255)
 step _ (Pause n) = Pause n
+step _ (Go xs n) = Go (replicate (num n) $ safeLast xs) ((n + 1) `mod` 255)
+  where
+    safeLast [] = Circle
+    safeLast xs = last xs
 
 view :: World -> Picture
-view w =
-  case w of
-    (Go xs n) -> pictures $ map (r n) xs
-    (Pause _) ->
-      translate (-120) 0 $
-      scale 0.2 0.2 $ color white $ text "Press r to resume"
+view (Pause _) =
+  translate (-120) 0 $ scale 0.2 0.2 $ color white $ text "Press r to resume"
+view (Go xs n) = pictures $ map (r n) xs
   where
-    c x = makeColorI 150 x x 255
-    r x Square = color (c x) (rectangleSolid (num x) (num x))
-    r x Circle = color (c x) (thickCircle (num x) (num x))
+    r x Square = color (makeColorI 150 x x 255) (rectangleSolid (num x) (num x))
+    r x Circle = color (makeColorI 150 x x 255) (thickCircle (num x) (num x))
