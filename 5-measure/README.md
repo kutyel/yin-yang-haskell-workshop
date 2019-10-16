@@ -1,5 +1,4 @@
-Exercise 5. Tossing coins in different ways
-===========================================
+# Exercise 5. Tossing coins in different ways
 
 The goal of this exercise is to implement the same function in four different ways, using the different primitives available in Haskell. The function in particular is:
 
@@ -11,24 +10,23 @@ A call like `throwCoin n` should generate `n` Boolean values and report back how
 
 You have to implement the function in four different styles:
 
-* *Using a list*: Generate `n` random Boolean values in a list, and then count how many of them are `True`. Use the function `replicateM` to execute an `IO` action exactly `n` times.
+- _Using a list_: Generate `n` random Boolean values in a list, and then count how many of them are `True`. Use the function `replicateM` to execute an `IO` action exactly `n` times.
 
-    Follow-up question: Why can't we use `randomIO` to generate a random *list* of Booleans directly, instead of using `replicateM`?
+  Follow-up question: Why can't we use `randomIO` to generate a random _list_ of Booleans directly, instead of using `replicateM`?
 
-* *Using a loop with an accumulator*: Instead of using list functions, implement a recursive function with two arguments: One that keeps track of how many times we still have to toss the coin, and another one that accumulates the number of `True` values. The skeleton of the function should be:
+- _Using a loop with an accumulator_: Instead of using list functions, implement a recursive function with two arguments: One that keeps track of how many times we still have to toss the coin, and another one that accumulates the number of `True` values. The skeleton of the function should be:
 
-    ```haskell
-    throwCoinLoop n = go n 0
-      where go :: Int -> Int -> IO Int
-            go n acc = ...
-    ```
+  ```haskell
+  throwCoinLoop n = go n 0
+    where go :: Int -> Int -> IO Int
+          go n acc = ...
+  ```
 
-* *Using a list, asynchronously*: Use the same method as the first one, but execute the random generation in `n` different threads. The function `replicateConcurrently` is handy for this.
+- _Using a list, asynchronously_: Use the same method as the first one, but execute the random generation in `n` different threads. The function `replicateConcurrently` is handy for this.
 
-* *Using STM and a variable*: Generate `n` different threads, each generating one random Boolean value. Each thread should update a shared `TVar` if the value of the toss is `True`.
+- _Using STM and a variable_: Generate `n` different threads, each generating one random Boolean value. Each thread should update a shared `TVar` if the value of the toss is `True`.
 
-Measuring performance
----------------------
+## Measuring performance
 
 The go-to library for measuring performance of Haskell functions is [Criterion](http://www.serpentine.com/criterion/tutorial.html). This library not only shows you the numbers, but also generates nice reports with lots of graphics.
 
